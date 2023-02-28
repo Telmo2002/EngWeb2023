@@ -1,6 +1,5 @@
 import json
 
-
 def ordcidade (cidade):
     return cidade['nome']
 
@@ -29,7 +28,7 @@ pagHTML = """
 """
 
 for c in cidades:
-    pagHTML += f"<li><a href='{c['id']}'>{c['nome']}</a></li>"
+    pagHTML += f"<li><a href='#{c['id']}'>{c['nome']}</a></li>"
 
 
 pagHTML += """
@@ -47,27 +46,9 @@ pagHTML += """
 </html>
 """
 
-print(pagHTML)
-
-for c in cidades: 
-    pagHTML = """
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Mapa Virtual</title>
-        <meta charset="utf-8"/>
-    </head>
-    <body>
-        <h1>Mapa Virtual</h1>
-        <table>
-            <tr>
-                <!-- Coluna do índice -->
-                <td width="30%" valign="top">
-                    <a name="indice"/>
-                    <ol>
-"""
+for c in cidades:
     pagHTML += f"""
-                    <a name="#{c['id']}"/>
+                    <a name="{c['id']}"/>
                     <h3>{c['nome']}</h3>
                     <p><b>Distrito:</b> {c['distrito']}</p>
                     <p><b>População:</b> {c['população']}</p>
@@ -100,7 +81,7 @@ for c in cidades:
     </html>
     """
 
-    print(pagHTML)
+print(pagHTML)
 
 
 
