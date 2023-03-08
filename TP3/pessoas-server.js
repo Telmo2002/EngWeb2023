@@ -94,7 +94,7 @@ http.createServer(function (req, res) {
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                 if(typeString[0] == "profissao") {
-                    res.write(mypages.genProfPage(pessoas, d, typeString[0], typeString[1]))
+                    res.write(mypages.genProfPage(pessoas, d, typeString[0], typeDecoded))
                 }
                 else {
                 res.write(mypages.genTypePage(pessoas, d, typeString[0], typeDecoded))
