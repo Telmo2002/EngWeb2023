@@ -67,13 +67,38 @@ http.createServer(function (req, res) {
             }
         })
     }
-    else if(req.url.match(/\/distribuicao\/\w+\/\w+/)){
-        axios.get('http://localhost:3000/pessoas')
+    else if(req.url == '/pessoasOrdenadas'){
+        axios.get('http://localhost:3000/pessoas?_sort=nome')
             .then(function(resp){
-                typeString = req.url.substring(14).split('/')
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.write(mypages.genTypePage(pessoas, d, typeString[0], typeString[1]))
+                res.write(mypages.genMainPage(pessoas, d))
+                res.end()
+            })
+            .catch(erro => {
+                console.log("Erro: " + erro)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end('<p>Erro na obtrenção de dados: ' + erro + '</p>')
+            })
+    }
+    else if(req.url.match(/\/distribuicao\/\w+\/\w+/)){
+        typeString = req.url.substring(14).split('/')
+        desporto = ""
+        if(typeString[0] == "desportos" || typeString[0] == "profissao") {
+            typeDecoded = decodeURIComponent(typeString[1])
+        } else {
+            typeDecoded = typeString[1]
+        }
+        axios.get('http://localhost:3000/pessoas')
+            .then(function(resp){
+                var pessoas = resp.data
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                if(typeString[0] == "profissao") {
+                    res.write(mypages.genProfPage(pessoas, d, typeString[0], typeString[1]))
+                }
+                else {
+                res.write(mypages.genTypePage(pessoas, d, typeString[0], typeDecoded))
+                }
                 res.end()
             })
             .catch(erro => {
@@ -87,7 +112,14 @@ http.createServer(function (req, res) {
             .then(function(resp){
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                if(req.url.substring(14) == "profissao") {
+                    res.write(mypages.genTop10Page(pessoas, d, req.url.substring(14)))//, typeDecoded)
+                }
+                else {
+                //res.write(mypages.genTypePage(pessoas, d, typeString[0], typeDecoded))
                 res.write(mypages.genDistribPage(pessoas, d,req.url.substring(14)))
+                }
+                
                 res.end()
             })
             .catch(erro => {

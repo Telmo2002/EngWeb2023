@@ -29,13 +29,24 @@ exports.filter = function(people, tipoGeral, tipo){
             }
         } else {
             let x = people[person][tipoGeral]
-            for (let i = 0; i < x.length; i++) {
-                if(people[person][tipoGeral][i] == tipo){
+                if(x.includes(tipo)){
                     countsType.push(people[person])
-                    break
                 }
             }
         }
-    }
     return countsType
 }
+
+exports.top10Prof = function(dict) {
+    // Convert dictionary to array of key-value pairs
+    const entries = Object.entries(dict);
+    
+    // Sort array by value in descending order
+    entries.sort((a, b) => b[1] - a[1]);
+    
+    // Extract the first 10 elements of the sorted array
+    const top10 = entries.slice(0, 10);
+    
+    // Convert the top 10 array back to a dictionary and return it
+    return Object.fromEntries(top10);
+  }
