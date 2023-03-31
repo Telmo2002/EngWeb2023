@@ -11,7 +11,12 @@ router.get('/pessoas', function(req, res, next) {
 
 router.get('/pessoas/:id', function(req, res, next) {
   Pessoa.getPessoa(req.params.id)
-    .then(dados => res.json(dados))
+    .then(dados => {
+      if(dados==null)
+        res.status(404).json(dados)
+      else
+        res.status(201).json(dados)
+    })
     .catch(erro => res.status(602).json({erro: erro}))
 });
 

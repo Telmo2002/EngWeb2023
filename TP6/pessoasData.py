@@ -14,10 +14,10 @@ for person in pessoas:
 
     # Check if the person already exists in the database
     exists = requests.get("http://localhost:3000/pessoas/" + person["_id"])
-    print(exists)
-    if exists == None:
+
+    if exists.status_code == 404:
         # Insert the new record
         requests.post("http://localhost:3000/pessoas", json=person)
     else:
         # Update the existing record in the database
-        requests.put("http://localhost:3000/pessoas/" + person["_id"], json=person)
+        requests.put("http://localhost:3000/pessoas/" + person["_id"], json=person)    
