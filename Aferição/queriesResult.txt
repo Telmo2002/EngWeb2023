@@ -1,0 +1,38 @@
+1. Quantos exames estão registados?
+db.exams.count() -> 300
+2. Quantos exames tiveram um resultado válido?
+db.exames.count({resultado: true}) -> 138
+
+3. Qual a distribuição dos exames por género?
+db.exames.aggregate([ { $group: { _id: "$género", count: { $sum: 1 } } }])
+-> [ { _id: 'M', count: 158 }, { _id: 'F', count: 142 } ]
+
+4.
+db.exames.aggregate([ { $group: { _id: "$modalidade", count: { $sum: 1 } } }])
+[
+  { _id: 'Basquetebol', count: 13 },
+  { _id: 'Karaté', count: 15 },
+  { _id: 'BTT', count: 18 },
+  { _id: 'Triatlo', count: 23 },
+  { _id: 'Futebol', count: 24 },
+  { _id: 'Ténis', count: 10 },
+  { _id: 'Badminton', count: 21 },
+  { _id: 'Parapente', count: 19 },
+  { _id: 'Orientação', count: 19 },
+  { _id: 'Atletismo', count: 18 },
+  { _id: 'SUP', count: 16 },
+  { _id: 'Dança', count: 17 },
+  { _id: 'Equitação', count: 13 },
+  { _id: 'Esgrima', count: 20 },
+  { _id: 'Patinagem', count: 18 },
+  { _id: 'Ciclismo', count: 18 },
+  { _id: 'Andebol', count: 18 }
+]
+
+5. 
+db.exames.countDocuments({federado: true, clube: "GDGoma"})
+-> 12
+
+6.
+db.exames.count({género: "F", modalidade: "Triatlo"})
+-> 9
